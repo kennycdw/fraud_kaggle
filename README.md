@@ -1,2 +1,3 @@
-# fraud_kaggle
-AdTracking Fraud Detection Challenge
+# AdTracking Fraud Detection Challenge
+
+To be updated.
