@@ -15,8 +15,6 @@ dataset['day'] = pd.to_datetime(dataset.click_time).dt.day.astype('uint8')
 dataset['minute'] = pd.to_datetime(dataset.click_time).dt.minute.astype('uint8')
 dataset['second'] = pd.to_datetime(dataset.click_time).dt.second.astype('uint8')
 
-
-
 countfeatures = [['hour'],
                  ['ip'],
                  ['app','channel'],
@@ -25,6 +23,7 @@ countfeatures = [['hour'],
                  ['ip','app','os']
                  ]
 
+#Creates pivoting count features as well as conditional probability
 def bayesfunction(dataset,featuregroups):
     for group in featuregroups:
         #Creating feature name, alternatively use join
