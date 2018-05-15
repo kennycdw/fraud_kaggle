@@ -1,12 +1,14 @@
+# This script creates a new feature in an attempt to identify duplicated datapoints, which is prevalent in the dataset
+
 import pandas as pd
 
 #day 9
 frm = 144038905
-to = 184903890
+to = 1849038905
 
 #day 8
-frm2 =
-to2 =
+frm8 = 81038905
+frm9 = 119038905
 
 dtypes = {
         'ip'            : 'uint32',
