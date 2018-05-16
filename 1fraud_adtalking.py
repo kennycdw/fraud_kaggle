@@ -14,8 +14,8 @@ cores = 4
 MISSING8 = 255
 filename = "model"
 
-frm = 144
-to = 144
+frm = 80903891
+to = 184903890
 
 dtypes = {
         'ip'            : 'uint32',
@@ -166,9 +166,14 @@ print("Creating features...")
 
 train_df['hour'] = pd.to_datetime(train_df.click_time).dt.hour.astype('uint8')
 train_df['day'] = pd.to_datetime(train_df.click_time).dt.day.astype('uint8')
+
 # Count features
 count_group = [['ip'],
-               ['app','channel']
+               ['ip','hour'],
+               ['app','channel'],
+               ['ip','device'],
+               ['ip','app'],
+               ['ip','app','os']
                ]
 train_df = feature_count(train_df,count_group)
 gc.collect()
@@ -179,19 +184,21 @@ ccount_group = [['ip','device','os'],
                 ['ip','app','os']
                 ]
 
-feature_cumcount(train_df,ccount_group,'channel',"uint32")
-gc.collect()
+#feature_cumcount(train_df,ccount_group,'channel',"uint32")
+#gc.collect()
 
 # Unique/mean/var features
-train_df = feature_operatorcount(train_df,['ip','device','os'],'app','unique','uint32')
-gc.collect()
-train_df = feature_operatorcount(train_df,['ip','app','channel'],'hour','mean','float32')
-gc.collect()
-train_df = feature_operatorcount(train_df,['ip','app','os'],'hour','var','float32')
-gc.collect()
+#train_df = feature_operatorcount(train_df,['ip','device','os'],'app','unique','uint32')
+#gc.collect()
+#train_df = feature_operatorcount(train_df,['ip','app','channel'],'hour','mean','float32')
+#gc.collect()
+#train_df = feature_operatorcount(train_df,['ip','app','os'],'hour','var','float32')
+#gc.collect()
 
 # time to next click
 feature_nextclick(train_df,['ip','app','device','os'])
+gc.collect()
+feature_nextclick(train_df,['ip','app'])
 gc.collect()
 # We have yet do drop 'click_time'
 
@@ -340,8 +347,6 @@ del sub['click_time']
 print("writing...")
 sub.to_csv(filename + '.csv', index=False, float_format='%.9f')
 os.remove('test.pkl.gz')
-
-
 
 print("done...")
 print( sub.head(10) )
